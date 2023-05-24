@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class Time {
     private String nome;
     private List<Jogador> jogadores;
@@ -22,7 +24,25 @@ public class Time {
     }
 
     public int getTotalGolsMarcados() {
-        return jogadores.stream().mapToInt(Jogador::getGolsMarcados).sum();
+    	
+    	int totalGols = 0;
+    	for (Jogador jogador : jogadores) {
+			totalGols += jogador.getGolsMarcados();
+		}
+        return totalGols;
+    }
+    
+    public Jogador getArtilhieir() {
+    	Jogador artilhieiro = null;
+    	int maxGols = 0;
+    	
+    	for (Jogador jogador : jogadores) {
+			if(jogador.getGolsMarcados() > maxGols)
+				maxGols = jogador.getGolsMarcados();
+				artilhieiro = jogador;
+		}
+    	
+    	return artilhieiro;
     }
     
     

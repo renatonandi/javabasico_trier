@@ -1,12 +1,23 @@
 package br.com.trier.aula_3.timeFutebol;
 
-import lombok.Data;
+import javax.swing.JOptionPane;
 
-@Data
+import lombok.Getter;
+import lombok.Setter;
+@Getter
+@Setter
 public class Jogador {
     
-    private String nome;
+    public void setNome(String nome) {
+    	if (!nome.trim().isEmpty()) {
+    		this.nome = nome;		
+		}else {
+			JOptionPane.showMessageDialog(null, "Não pode estar com o nome em branco");
+		}
+	}
+	private String nome;
     private int numeroCamisa;
     private int golsMarcados;
+    
 
 }

@@ -17,9 +17,12 @@ public class PrincipalCarros {
                 Carro c = new Carro();
                 c.cadastrar();
                 carros.add(c);
-            }else if(opcao == 2) {
-               Carro c = new Carro();
-               c.listarPorPeriodo();
+            }else if(opcao == 2) {              
+               Carro.listarPorPeriodo();
+            }else if(opcao == 3) {
+            	Carro.listarPorMarca();
+            }else if(opcao == 4) {
+            	Carro.listarPorCor();
             }
             
         } while (opcao != 5);

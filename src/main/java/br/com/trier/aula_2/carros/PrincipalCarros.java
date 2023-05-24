@@ -18,11 +18,11 @@ public class PrincipalCarros {
                 c.cadastrar();
                 carros.add(c);
             }else if(opcao == 2) {              
-               Carro.listarPorPeriodo();
+               Util.listarPorPeriodo();
             }else if(opcao == 3) {
-            	Carro.listarPorMarca();
+            	Util.listarPorMarca();
             }else if(opcao == 4) {
-            	Carro.listarPorCor();
+            	Util.listarPorCor();
             }
             
         } while (opcao != 5);

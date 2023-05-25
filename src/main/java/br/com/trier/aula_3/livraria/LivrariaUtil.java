@@ -56,10 +56,5 @@ public class LivrariaUtil {
         
         return retornaString(livrosNoPreco);
     }
-    public static boolean validaNomeComposto(String nome) {
-        String padrao = "^[A-Za-z]+( [A-Za-z]+)?$";
-        Pattern pattern = Pattern.compile(padrao);
-        Matcher matcher = pattern.matcher(nome);
-        return matcher.matches();
-    }
+    
 }

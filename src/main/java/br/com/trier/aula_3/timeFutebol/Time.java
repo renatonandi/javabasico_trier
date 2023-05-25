@@ -32,7 +32,7 @@ public class Time {
         return totalGols;
     }
     
-    public Jogador getArtilhieir() {
+    public Jogador getArtilheiro() {
     	Jogador artilhieiro = null;
     	int maxGols = 0;
     	
@@ -59,11 +59,11 @@ public class Time {
             
             String nomeJogador = JOptionPane.showInputDialog(null, "Digite o nome do jogador:");
             if (nomeJogador == null) {
-                break;
+                
             }
             String numeroCamisaStr = JOptionPane.showInputDialog(null, "Digite o número da camisa:");
             if (numeroCamisaStr == null) {
-                break;
+                
             }
             int numeroCamisa;
             try {

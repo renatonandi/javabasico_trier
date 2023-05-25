@@ -29,7 +29,7 @@ public class Principal {
                 Time.cadastrarTime(times);
                 break;
         case 2:
-            String nomeTime = JOptionPane.showInputDialog(null, "Digite o nome do time:");
+            String nomeTime = JOptionPane.showInputDialog(null, "Diegite o nome do time:");
             FutebolUtil.listarJogadoresTime(nomeTime, times);
             break;
         case 3:

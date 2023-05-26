@@ -5,8 +5,10 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class Autor {
     private String nome;
     private GeneroEnum sexo;
@@ -17,8 +19,8 @@ public class Autor {
 
         while (!valido) {
             try {
-                nome = JOptionPane.showInputDialog("Digite o nome e o sobrenome").toUpperCase();               
-                if (validaNomeComposto(nome)) {
+                nome = JOptionPane.showInputDialog("Digite o nome e o sobrenome").trim().toUpperCase();               
+                if (nome.isEmpty() || !validaNomeComposto(nome)) {
                     throw new Exception("O nome deve conter nome e sobrenome");
                 }
             } catch (Exception e) {
@@ -35,23 +37,15 @@ public class Autor {
                 JOptionPane.showMessageDialog(null, e);
                 continue;
             }
-
-            GeneroEnum[] sex = GeneroEnum.values();
-            String[] sexStr = new String[sex.length];
-            for (int i = 0; i < sex.length; i++) {
-                sexStr[i] = sex[i].name();
-            }
-            String sexoStr = (String) JOptionPane.showInputDialog(null, "Selecione o gênero do autor",
-                    "Cadastro de Gênero", JOptionPane.PLAIN_MESSAGE, null, sexStr, sexStr[0]);
-
-            sexo = GeneroEnum.valueOf(sexoStr);
+            
+            sexo = GeneroEnum.selecionaSexo();
 
             valido = true;
         }
 
     }
     public static boolean validaNomeComposto(String nome) {
-        String padrao = "^[A-Za-z]+( [A-Za-z]+)?$";
+        String padrao = "^[A-Za-z]+ [A-Za-z]+$";
         Pattern pattern = Pattern.compile(padrao);
         Matcher matcher = pattern.matcher(nome);
         return matcher.matches();
@@ -59,7 +53,7 @@ public class Autor {
 
     @Override
     public String toString() {
-        return nome.trim() + ", Sexo: " + sexo + ", idade: " + idade + "\n";
+        return nome + ", Sexo: " + sexo + ", Idade: " + idade + "\n";
     }
 
 }

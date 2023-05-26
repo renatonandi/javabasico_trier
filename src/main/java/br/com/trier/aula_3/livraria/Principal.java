@@ -51,8 +51,11 @@ public class Principal {
                 JOptionPane.showMessageDialog(null, LivrariaUtil.getLivrosPorPreco(livros));
                 break;
             case 6:
-                JOptionPane.showMessageDialog(null, LivrariaUtil.getLivrosPorPreco(livros));
+                JOptionPane.showMessageDialog(null, LivrariaUtil.getAutoresCriancas(livros));
                 break;
+            case 7:
+            	JOptionPane.showMessageDialog(null, LivrariaUtil.getLivrosPorSexo(livros));
+            	break;
             case 8:
                 JOptionPane.showMessageDialog(null, "Encerrando o programa...");
                 return;

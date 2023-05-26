@@ -36,12 +36,15 @@ public class LivrariaUtil {
         List<Livro> autoresLivro = new ArrayList<Livro>();
         Autor autor = Livro.selecionaAutor(autores);
         for (Livro livro : livros) {
+        	
             if (livro.isAutorPresente(autor)) {
                 autoresLivro.add(livro);
             }
         }
         return retornaString(autoresLivro);
     }
+    
+    
     static String getLivrosPorPreco(List<Livro> livros) {
         List<Livro> livrosNoPreco = new ArrayList<Livro>();
         Double valorMin = Double.parseDouble(JOptionPane.showInputDialog("Digite o valor minimo que deseja buscar"));
@@ -49,12 +52,32 @@ public class LivrariaUtil {
                
         for (Livro livro : livros) {
          
-            if (livro.getPreco() >= valorMin && livro.getPreco() <= valorMax) {
-                livrosNoPreco = livros;
+            if (livro.isNoPreco(valorMin, valorMax)) {
+            	livrosNoPreco.add(livro);
             }
         }
         
         return retornaString(livrosNoPreco);
+    }
+    static String getAutoresCriancas(List<Livro> livros) {
+    	List<Livro> livrosComCrianca = new ArrayList<Livro>();
+    	
+    	for (Livro livro : livros) {
+			if (livro.isCrianca()) {
+				livrosComCrianca.add(livro);				
+			}
+		}
+    	return LivrariaUtil.retornaString(livrosComCrianca);
+    }
+    static String getLivrosPorSexo(List<Livro> livros) {
+    	List<Livro> livrosPorSexo = new ArrayList<Livro>();
+    	GeneroEnum sexo = GeneroEnum.selecionaSexo();
+    	for (Livro livro : livros) {
+			if (livro.isSexoSelecionado(sexo)) {
+				livrosPorSexo.add(livro);
+			}
+		}
+    	return LivrariaUtil.retornaString(livrosPorSexo);
     }
     
 }

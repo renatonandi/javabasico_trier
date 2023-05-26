@@ -113,10 +113,10 @@ public class Livro {
 	public boolean isSexoSelecionado(GeneroEnum sexo) {
 		for (Autor autor : autores) {
 			if (autor.getSexo().equals(sexo)) {
-				return true;
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 
 	@Override

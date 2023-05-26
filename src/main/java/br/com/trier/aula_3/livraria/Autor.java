@@ -29,10 +29,13 @@ public class Autor {
             }
             try {
                 String idadeDigitada = JOptionPane.showInputDialog("Digite a idade do autor");
-                if (idadeDigitada.isEmpty() || idadeDigitada.equals("0")) {
-                    throw new Exception("A idade é obrigatória e precisa ser maior que 0");
+                if (idadeDigitada.isEmpty()) {
+                    throw new Exception("A idade é obrigatória ");
                 }
                 idade = Integer.parseInt(idadeDigitada);
+                if (idade <= 0) {
+                    throw new Exception("A idade não pode ser negativa nem 0");
+                }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
                 continue;

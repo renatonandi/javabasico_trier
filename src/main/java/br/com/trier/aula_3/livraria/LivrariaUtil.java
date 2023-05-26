@@ -71,13 +71,14 @@ public class LivrariaUtil {
     }
     static String getLivrosPorSexo(List<Livro> livros) {
     	List<Livro> livrosPorSexo = new ArrayList<Livro>();
-    	GeneroEnum sexo = GeneroEnum.selecionaSexo();
+    	GeneroEnum sexo = GeneroEnum.selecionaSexoInvertido(); 
+    	
     	for (Livro livro : livros) {
 			if (livro.isSexoSelecionado(sexo)) {
 				livrosPorSexo.add(livro);
 			}
 		}
-    	return LivrariaUtil.retornaString(livrosPorSexo);
+    	return retornaString(livrosPorSexo);
     }
     
 }

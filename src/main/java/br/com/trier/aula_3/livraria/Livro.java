@@ -40,6 +40,9 @@ public class Livro {
 					autores.add(autor);
 					opcao = Integer.parseInt(
 							JOptionPane.showInputDialog("Deseja cadastrar outro autor \n(1 - SIM)\n(2 - NÃO)"));
+					if (autores.size() >= 4) {
+                        JOptionPane.showMessageDialog(null, "Limite de autores excedidos");
+                    }
 
 				} while (autores.size() < 4 && opcao == 1);
 

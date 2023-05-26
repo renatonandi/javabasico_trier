@@ -28,7 +28,7 @@ public class Autor {
                 continue;
             }
             try {
-                String idadeDigitada = JOptionPane.showInputDialog("Digite a idade do autor");
+                String idadeDigitada = JOptionPane.showInputDialog("Digite a idade do autor"); 
                 if (idadeDigitada.isEmpty()) {
                     throw new Exception("A idade é obrigatória ");
                 }

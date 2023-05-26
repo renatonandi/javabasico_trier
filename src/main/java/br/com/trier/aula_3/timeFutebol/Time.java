@@ -16,7 +16,7 @@ public class Time {
 
     public Time(String nome) {
         this.nome = nome;
-        this.jogadores = new ArrayList<>();
+        this.jogadores = new ArrayList<Jogador>();
     }
 
     public void adicionarJogador(Jogador jogador) {

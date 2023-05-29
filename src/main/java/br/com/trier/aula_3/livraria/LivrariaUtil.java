@@ -35,8 +35,7 @@ public class LivrariaUtil {
     static String getLivrosPorAutor(List<Autor> autores, List<Livro> livros) {
         List<Livro> autoresLivro = new ArrayList<Livro>();
         Autor autor = Livro.selecionaAutor(autores);
-        for (Livro livro : livros) {
-        	
+        for (Livro livro : livros) {        	
             if (livro.isAutorPresente(autor)) {
                 autoresLivro.add(livro);
             }

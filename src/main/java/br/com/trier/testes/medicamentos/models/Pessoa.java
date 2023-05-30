@@ -23,9 +23,13 @@ public class Pessoa {
 		this.medicamentosPrescritos = new ArrayList<>();
 	}
 	
-	public void addMedicamentoPrescrito(Medicamento medicamento) {
-		medicamentosPrescritos.add(medicamento);
-	}
+	public boolean addMedicamento(Medicamento m) {
+        if(m.isIndicado(sintoma) && !m.isContraIndicado(alergias)) {
+            medicamentosPrescritos.add(m);
+            return true;
+        }
+        return false;
+    }
 	
 	@Override
 	public String toString() {

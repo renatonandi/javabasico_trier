@@ -1,9 +1,7 @@
 package br.com.trier.testes.medicamentos.repository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import br.com.trier.testes.medicamentos.models.Medicamento;
@@ -12,36 +10,27 @@ import lombok.Getter;
 
 @Getter
 public class PrescricaoMedicamentos {
-    private List<Medicamento> medicamentos;
-    private List<Pessoa> pessoas;
+     List<Medicamento> medicamentos = new ArrayList<Medicamento>();
+     List<Pessoa> pessoas = new ArrayList<Pessoa>();
 
-    public PrescricaoMedicamentos() {
-        medicamentos = new ArrayList<>();
-        pessoas = new ArrayList<>();
-    }
+    
 
     public void cadastrarMedicamento(Medicamento medicamento) {
         medicamentos.add(medicamento);
     }
 
-    public Pessoa cadastrarPessoa(Pessoa pessoa) {
+    public void cadastrarPessoa(Pessoa pessoa) {
         pessoa.setId(pessoas.size() + 1);
         pessoas.add(pessoa);
-        return pessoa;
     }
 
-    public boolean prescreverMedicamentoParaPessoa(Integer pessoaId) {
-		Pessoa pessoa = findPessoaById(pessoaId);
-		if (pessoa == null) {
-            return false;
-        }		
-		List<Medicamento> medicamentosPrescritos = medicamentos.stream().filter(medicamento -> medicamento.getIndicacoes().contains(pessoa.getSintoma()))
-		        .filter(medicamento -> !isAlergia(pessoa, medicamento)).collect(Collectors.toList()); 
+    public boolean prescreverMedicamentoParaPessoa(Pessoa p, Medicamento m) {
 		
-		pessoa.getMedicamentosPrescritos().addAll(medicamentosPrescritos);
-		return true;
-	}
-    
+        if (p != null && m != null) {
+            return p.addMedicamento(m);
+        }	
+        return false;		
+	}    
 
     public Pessoa findPessoaById(Integer id) {
         return pessoas.stream().filter(p -> id.equals(p.getId())).findAny().orElse(null);
@@ -50,14 +39,7 @@ public class PrescricaoMedicamentos {
     public Medicamento findMedicamento(String nome) {
         return medicamentos.stream().filter(m -> m.getNome().equals(nome)).findFirst().orElse(null);
     }
-    
-
-    private boolean isAlergia(Pessoa pessoa, Medicamento medicamento) {
-        List<String> alergias = pessoa.getAlergias();
-        List<String> alergiasContraindicadas = medicamento.getAlergias();
-
-        return alergias.stream().anyMatch(alergia -> alergiasContraindicadas.contains(alergia));
-    }
+       
     
 
     public List<String> listPessoasMedicamentos() {
@@ -65,9 +47,6 @@ public class PrescricaoMedicamentos {
     }
     
 
-    public void clearData() {
-        pessoas.clear();
-        medicamentos.clear();
-    }
+    
 
 }

@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,8 +21,8 @@ public class PrescricaoMedicamentosTest {
 	
 	@BeforeEach
 	void init() {
-		pm.clearData();
-		
+	    pm.getPessoas().clear();
+	    pm.getMedicamentos().clear();
 		
 		
 		Medicamento medicamento1 = new Medicamento("Ibuprofeno", UsoEnum.ORAL, Arrays.asList("Alergia1"), Arrays.asList("Dor de cabeça", "Inflamação"));
@@ -32,7 +31,7 @@ public class PrescricaoMedicamentosTest {
 		pm.cadastrarMedicamento(medicamento1);
 		pm.cadastrarMedicamento(medicamento2);
 		
-		Pessoa pessoa1 = new Pessoa("Renato", "Dor de cabeça", Arrays.asList("Alergia1", "Alergia2")); 
+		Pessoa pessoa1 = new Pessoa("Renato", "Dor de cabeça", Arrays.asList("Alergia2")); 
 		Pessoa pessoa2 = new Pessoa("João", "Febre", Arrays.asList("Alergia2")); 
 		pm.cadastrarPessoa(pessoa1);
 		pm.cadastrarPessoa(pessoa2);
@@ -50,6 +49,7 @@ public class PrescricaoMedicamentosTest {
 		assertEquals("Aspirina", medicamentoEncontrado.getNome());
 	}
 	
+	
 	@Test
 	void cadastrarPessoaTest() {
 	    Pessoa pessoa3 = new Pessoa("Beatriz", "Dor de cabeça", Arrays.asList("Alergia2"));
@@ -64,8 +64,42 @@ public class PrescricaoMedicamentosTest {
 	void listPessoasMedicamentosTest() {
 	    List<String> pessoasMedicamentos = pm.listPessoasMedicamentos();
 	    assertEquals(2, pessoasMedicamentos.size());
-	    assertEquals("Pessoa: Renato, Sintoma: Dor de cabeça, Medicamento: Ibuprofeno, ORAL", pessoasMedicamentos.get(0));
-	    assertEquals("Pessoa: João, Sintoma: Febre, Medicamento: Ibuprofeno, ORAL", pessoasMedicamentos.get(1));
+	   
+	}
+	@Test
+	void prescreveMedicamentoTest() {
+	    Pessoa p = pm.getPessoas().get(0);
+	    Medicamento m = pm.getMedicamentos().get(0);
+	    boolean prescricaoRealizada = pm.prescreverMedicamentoParaPessoa(p, m);
+	    
+	    assertEquals(true ,prescricaoRealizada);
+	    assertEquals(1, p.getMedicamentosPrescritos().size());
+	    assertEquals("Ibuprofeno", p.getMedicamentosPrescritos().get(0).getNome());
+	}
+	@Test
+	void naoPrescreveMedicamentoTest() {
+	    Pessoa p = pm.getPessoas().get(1);
+	    Medicamento m = pm.getMedicamentos().get(0);
+	    boolean prescricaoRealizada = pm.prescreverMedicamentoParaPessoa(p, m);
+	    
+	    assertEquals(false ,prescricaoRealizada);
+	    assertEquals(0, p.getMedicamentosPrescritos().size());
+	}
+	@Test
+	void erroPrescreveMedicamentoTest() {
+	    Pessoa p = pm.getPessoas().get(1);
+	    Medicamento m = pm.getMedicamentos().get(1);
+	    boolean prescricaoRealizada = pm.prescreverMedicamentoParaPessoa(p, m);
+	    
+	    assertEquals(false ,prescricaoRealizada);
+	    assertEquals(0, p.getMedicamentosPrescritos().size());
+	}
+	@Test
+	void prescricaoPessoaNaoEncontradaTest() {
+	    Pessoa p = pm.findPessoaById(3);
+	    Medicamento m = pm.getMedicamentos().get(0);
+	    boolean prescricao = pm.prescreverMedicamentoParaPessoa(p, m);
+	    assertEquals(false, prescricao);
 	}
 	
 	

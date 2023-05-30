@@ -4,27 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.trier.testes.medicamentos.enums.UsoEnum;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@AllArgsConstructor
 public class Medicamento {
-
+    @NonNull
 	private String nome;
-	private UsoEnum uso;
-	private List<String> alergias = new ArrayList<String>();
+    @NonNull
+    private UsoEnum uso;
+	@NonNull
+    private List<String> alergias = new ArrayList<String>();
+	@NonNull
 	private List<String> indicacoes = new ArrayList<String>();
 	
 	
-	public Medicamento(String nome, UsoEnum uso, List<String> alergias, List<String> indicacoes) {
-		this.nome = nome;
-		this.uso = uso;
-		this.alergias = alergias;
-		this.indicacoes = indicacoes;
-	}
 	
-	@Override
-	public String toString() {
-		return "Medicamento: " + nome + ", Tipo de Uso: " + uso.getDescricao();
-	}
+
+	public boolean isIndicado(String sintoma) {
+        return indicacoes.contains(sintoma);
+    }	
+	
+	public boolean isContraIndicado(List<String> condicaoSaude) {
+        return alergias.stream().anyMatch(condicaoSaude :: contains);
+    }
+	
+	
 	
 }

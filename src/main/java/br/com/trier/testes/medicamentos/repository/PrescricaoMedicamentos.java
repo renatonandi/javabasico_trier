@@ -12,65 +12,62 @@ import lombok.Getter;
 
 @Getter
 public class PrescricaoMedicamentos {
-	private Map<String, Medicamento> medicamentos;
-	private Map<Integer, Pessoa> pessoas;
-	private int nextId;
-	
-	
-	public PrescricaoMedicamentos() {
-		medicamentos = new HashMap<>();
-		pessoas = new HashMap<>();
-		nextId = 1;
-	}
-	
-	
-	public void cadastrarMedicamento(Medicamento medicamento) {
-		medicamentos.put(medicamento.getNome(), medicamento);
-	}
-	
-	
-	public void cadastrarPessoa(Pessoa pessoa) {
-		pessoa.setId(nextId);
-		pessoas.put(nextId, pessoa);
-		nextId++;
-	}
-	
-	
-	public boolean prescreverMedicamentoParaPessoa(Integer pessoaId, String nomeMedicamento) {
-		Pessoa pessoa = pessoas.get(pessoaId);
-		Medicamento medicamento = medicamentos.get(nomeMedicamento);
+    private List<Medicamento> medicamentos;
+    private List<Pessoa> pessoas;
+
+    public PrescricaoMedicamentos() {
+        medicamentos = new ArrayList<>();
+        pessoas = new ArrayList<>();
+    }
+
+    public void cadastrarMedicamento(Medicamento medicamento) {
+        medicamentos.add(medicamento);
+    }
+
+    public Pessoa cadastrarPessoa(Pessoa pessoa) {
+        pessoa.setId(pessoas.size() + 1);
+        pessoas.add(pessoa);
+        return pessoa;
+    }
+
+    public boolean prescreverMedicamentoParaPessoa(Integer pessoaId) {
+		Pessoa pessoa = findPessoaById(pessoaId);
+		if (pessoa == null) {
+            return false;
+        }		
+		List<Medicamento> medicamentosPrescritos = medicamentos.stream().filter(medicamento -> medicamento.getIndicacoes().contains(pessoa.getSintoma()))
+		        .filter(medicamento -> !isAlergia(pessoa, medicamento)).collect(Collectors.toList()); 
 		
-		if (pessoa != null && medicamento != null && pessoa.getMedicamentosPrescritos().isEmpty()) {
-			if (medicamento.getIndicacoes().contains(pessoa.getSintoma())) {
-				boolean possuiAlergia = pessoa.getAlergias().stream().anyMatch(medicamento.getAlergias()::contains);
-				if (!possuiAlergia) {
-					pessoa.addMedicamentoPrescrito(medicamento);
-					return true;
-				}
-			}
-			
-		}
-		return false;
+		pessoa.getMedicamentosPrescritos().addAll(medicamentosPrescritos);
+		return true;
 	}
-	
-	public Pessoa findById(Integer id) {			
-		return pessoas.get(id);
-	}
-	
-	
-	public Medicamento buscarPorNome(String nomeMedicmanto) {
-		return medicamentos.get(nomeMedicmanto);
-	}
-	
-	
-	public List<String> listPessoasMedicamentos() {
-		return pessoas.values().stream().map(Pessoa::toString).collect(Collectors.toList());
-	}
-	
-	
-	public void clearData() {
-		pessoas.clear();
-		medicamentos.clear();
-	}
+    
+
+    public Pessoa findPessoaById(Integer id) {
+        return pessoas.stream().filter(p -> id.equals(p.getId())).findAny().orElse(null);
+    }
+    
+    public Medicamento findMedicamento(String nome) {
+        return medicamentos.stream().filter(m -> m.getNome().equals(nome)).findFirst().orElse(null);
+    }
+    
+
+    private boolean isAlergia(Pessoa pessoa, Medicamento medicamento) {
+        List<String> alergias = pessoa.getAlergias();
+        List<String> alergiasContraindicadas = medicamento.getAlergias();
+
+        return alergias.stream().anyMatch(alergia -> alergiasContraindicadas.contains(alergia));
+    }
+    
+
+    public List<String> listPessoasMedicamentos() {
+        return pessoas.stream().map(p -> p.toString()).collect(Collectors.toList());
+    }
+    
+
+    public void clearData() {
+        pessoas.clear();
+        medicamentos.clear();
+    }
 
 }

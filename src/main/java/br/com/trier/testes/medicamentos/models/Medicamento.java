@@ -24,7 +24,7 @@ public class Medicamento {
 	
 	@Override
 	public String toString() {
-		return "Medicamento: " + nome + ", Tipo de Uso: " + uso.getDescricao() + "\n";
+		return "Medicamento: " + nome + ", Tipo de Uso: " + uso.getDescricao();
 	}
 	
 }

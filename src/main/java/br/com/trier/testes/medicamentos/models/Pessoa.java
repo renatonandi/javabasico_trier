@@ -16,8 +16,7 @@ public class Pessoa {
 	private List<Medicamento> medicamentosPrescritos;
 	
 	
-	public Pessoa(int id,String nome, String sintoma, List<String> alergias) {
-		this.id = id;
+	public Pessoa(String nome, String sintoma, List<String> alergias) {
 		this.nome = nome;
 		this.sintoma = sintoma;
 		this.alergias = alergias;
@@ -30,7 +29,7 @@ public class Pessoa {
 	
 	@Override
 	public String toString() {
-		return "Pessoa: " + nome + ", Sintoma: " + sintoma + ", Medicamentos\n" + medicamentosPrescritos.toString();
+		return "Pessoa: " + nome + ", Sintoma: " + sintoma + ", " + medicamentosPrescritos.toString();
 	}
 	
 	

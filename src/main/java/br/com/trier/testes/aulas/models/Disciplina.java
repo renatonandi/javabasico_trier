@@ -1,15 +1,16 @@
 package br.com.trier.testes.aulas.models;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Disciplina {
+	private int id;
     @NonNull
     private String nome;
     @NonNull

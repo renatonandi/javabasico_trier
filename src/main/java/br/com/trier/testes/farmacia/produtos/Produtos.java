@@ -1,5 +1,6 @@
 package br.com.trier.testes.farmacia.produtos;
 
+import br.com.trier.testes.farmacia.cliente.Cliente;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,7 +9,7 @@ import lombok.Getter;
 public class Produtos {
 	private String nome;
 	private int estoque;
-	private double valor;
+	protected double valor;
 	
 	
 	public boolean isEstoque(Produtos produto) {		
@@ -18,8 +19,13 @@ public class Produtos {
 		return false;
 	}
 	
-	public boolean autorizaVenda() {
-		return true;
+	public boolean realizaVenda(Cliente cliente, Produtos produto) {
+		if (estoque > 0) {
+			estoque -= 1;
+			cliente.setDivida(cliente.getDivida() + valor); 
+			return true;
+		}
+		return false;
 	}
 
 }

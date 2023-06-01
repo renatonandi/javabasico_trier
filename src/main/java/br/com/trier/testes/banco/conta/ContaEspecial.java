@@ -1,26 +1,26 @@
 package br.com.trier.testes.banco.conta;
 
 public class ContaEspecial extends ContaCorrente{
-    private int limite;
+	private Double limite;
 
-    public ContaEspecial(int numero, int agencia, String nomeCorrentista, Double saldo) {
+    public ContaEspecial(int numero, int agencia, String nomeCorrentista, Double saldo, Double limite) {
         super(numero, agencia, nomeCorrentista, saldo);
+        this.limite = limite;
+        
     }
     
+    
+    
     @Override
-    public boolean saque(double valor) {
-        
-        try {
-            if (saldo - valor < -limite) {
-                throw new Exception("Saldo insuficiente");
-            }
-            saldo -= valor;
+    public boolean saque(double valor) {       
+       
+            if (saldo + limite < valor) {
+            	return false;
+            }else if (saldo + limite >= valor) {				
+            	saldo = (saldo + limite) - valor;
+			}
             return true;
-            
-        } catch (Exception e) {
-            System.out.println(e);
-        }        
-        return false;
+			
     }
 
 }

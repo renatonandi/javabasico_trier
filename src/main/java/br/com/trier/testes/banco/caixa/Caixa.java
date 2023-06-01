@@ -11,8 +11,8 @@ public class Caixa {
     public boolean operacaoDeposito(ContaCorrente conta, double valor) {
         return conta.deposito(valor);
     }
-    public boolean operacaoTransferencia(ContaCorrente conta, ContaCorrente contaDestino, ContaCorrente contaOrigem, double valor) {
-        return conta.transferencia(contaDestino, contaOrigem, valor);
+    public boolean operacaoTransferencia(ContaCorrente contaDestino, ContaCorrente contaOrigem, double valor) {
+        return contaOrigem.transferencia(contaDestino, contaOrigem, valor);
     }
 
 }

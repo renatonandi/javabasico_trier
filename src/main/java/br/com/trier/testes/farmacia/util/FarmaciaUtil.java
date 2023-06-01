@@ -8,8 +8,9 @@ import br.com.trier.testes.farmacia.cliente.Cliente;
 import br.com.trier.testes.farmacia.produtos.EquipamentosMedicos;
 import br.com.trier.testes.farmacia.produtos.Perfumaria;
 import br.com.trier.testes.farmacia.produtos.Produtos;
+import lombok.Getter;
 import br.com.trier.testes.farmacia.produtos.Medicamentos;
-
+@Getter
 public class FarmaciaUtil {
 	
 	private List<Produtos> produtos = new ArrayList<Produtos>();
@@ -60,5 +61,7 @@ public class FarmaciaUtil {
 		}
 		return false;
 	}
+	
+	
 	
 }

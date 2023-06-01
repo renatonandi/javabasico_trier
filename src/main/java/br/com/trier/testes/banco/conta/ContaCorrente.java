@@ -7,35 +7,39 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ContaCorrente {
 
-	private int numero;
-	private int agencia;
-	private String nomeCorrentista;
-	protected Double saldo;
+    private int numero;
+    private int agencia;
+    private String nomeCorrentista;
+    protected Double saldo;
 
-	public boolean deposito(double valor) {
-		saldo += valor;
-		return true;
-	}
+    public boolean deposito(double valor) {
+        if (valor > 0) {
+            saldo += valor;
+            return true;
+        }
+        return false;
+    }
 
-	public boolean saque(double valor) {
+    public boolean saque(double valor) {
 
-		if ((getSaldo() - valor) < 0) {
-			return false;
-		}
-		saldo -= valor;
-		return true;
+        if ((getSaldo() - valor) < 0) {
+            return false;
+        }
+        saldo = getSaldo() - valor;
+        return true;
 
-	}
+    }
 
-	public boolean transferencia(ContaCorrente contaDestino, ContaCorrente contaOrigem, double valor) {
+    public boolean transferencia(ContaCorrente contaDestino, ContaCorrente contaOrigem, double valor) {
 
-		if (!contaOrigem.saque(valor)) {
-			return false;
-		} else if (!contaDestino.deposito(valor)) {
-			contaOrigem.deposito(valor);
-			return false;
-		}else {
-		return contaDestino.deposito(valor) && contaOrigem.saque(valor);
-		}
-	}
+        if (saque(valor)) {
+            if (contaDestino.deposito(valor)) {
+                return true;
+            } else {
+                deposito(valor);
+                return false;
+            }
+        }
+        return false;
+    }
 }

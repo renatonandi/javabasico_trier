@@ -72,7 +72,7 @@ class CaixaTest {
     @DisplayName("Teste retirada conta especial usando saldo especial")
     void saqueContaEspecial() {
     	assertTrue(caixa.operacaoSaque(contaEspecial, 1700.00));
-    	assertEquals(300.00, contaEspecial.getSaldo());
+    	assertEquals(-200.00, contaEspecial.getSaldo());
     }
     
     @Test
@@ -100,8 +100,8 @@ class CaixaTest {
     @DisplayName("Teste transferencia para conta corrente")
     void transferenciaContaCorrente() {
     	assertTrue(caixa.operacaoTransferencia(contaCorrente, contaEspecial, 500.00));
-    	assertEquals(2000.00, contaCorrente.getSaldo());
-    	assertEquals(1500.00, contaEspecial.getSaldo());
+    	assertEquals(1500.00, contaCorrente.getSaldo());
+    	assertEquals(1000.00, contaEspecial.getSaldo());
     }
     
     @Test
@@ -117,7 +117,7 @@ class CaixaTest {
     void transferenciaContaUniversitariaSemLimite() {
     	assertFalse(caixa.operacaoTransferencia(contaUniversitaria, contaEspecial, 1900.00));
     	assertEquals(500.00, contaUniversitaria.getSaldo());
-    	assertEquals(2000.00, contaEspecial.getSaldo());
+    	assertEquals(1500.00, contaEspecial.getSaldo());
     }
     
     

@@ -17,7 +17,7 @@ public class ContaEspecial extends ContaCorrente{
             if (saldo + limite < valor) {
             	return false;
             }else if (saldo + limite >= valor) {				
-            	saldo = (saldo + limite) - valor;
+            	saldo = getSaldo() - valor;
 			}
             return true;
 			

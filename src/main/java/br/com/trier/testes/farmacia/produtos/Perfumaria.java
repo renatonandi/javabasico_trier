@@ -11,9 +11,9 @@ public class Perfumaria extends Produtos{
 	}
 	
 	@Override
-	public boolean realizaVenda(Cliente cliente, Produtos produto) {
-		if (cliente.getDivida() < 300.00 && isEstoque(produto)) {
-			super.realizaVenda(cliente, produto);
+	public boolean realizaVenda(Cliente cliente, Produtos produto, Integer quantidade) {
+		if (cliente.getDivida() + (produto.getValor() * quantidade) < 300.00 && isEstoque(produto, quantidade)) {
+			super.realizaVenda(cliente, produto, quantidade);
 			return true;
 		}
 		return false;

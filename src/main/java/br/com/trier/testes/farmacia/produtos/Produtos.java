@@ -12,17 +12,17 @@ public class Produtos {
 	protected double valor;
 	
 	
-	public boolean isEstoque(Produtos produto) {		
-		if (produto.getEstoque() > 0) {
+	public boolean isEstoque(Produtos produto, int quantidade) {		
+		if ((produto.getEstoque() - quantidade) > 0) {
 			return true ;
 		}
 		return false;
 	}
 	
-	public boolean realizaVenda(Cliente cliente, Produtos produto) {
-		if (estoque > 0) {
-			estoque -= 1;
-			cliente.setDivida(cliente.getDivida() + valor); 
+	public boolean realizaVenda(Cliente cliente, Produtos produto, Integer quantidade) {
+		if ((estoque - quantidade) > 0) {
+			estoque -= quantidade;
+			cliente.setDivida(cliente.getDivida() + (valor * quantidade)); 
 			return true;
 		}
 		return false;

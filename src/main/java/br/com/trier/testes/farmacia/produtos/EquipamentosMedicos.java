@@ -11,8 +11,8 @@ public class EquipamentosMedicos extends Produtos{
 	}
 	
 	@Override
-	public boolean realizaVenda(Cliente cliente, Produtos produto) {
-		cliente.setDivida(cliente.getDivida() + valor);
+	public boolean realizaVenda(Cliente cliente, Produtos produto, Integer quantidade) {
+		cliente.setDivida(cliente.getDivida() + (valor * quantidade));
 		return true;
 	}
 

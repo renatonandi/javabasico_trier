@@ -20,7 +20,7 @@ public class Produtos {
 	}
 	
 	public boolean realizaVenda(Cliente cliente, Produtos produto, Integer quantidade) {
-		if ((estoque - quantidade) > 0) {
+		if ((getEstoque() - quantidade) > 0) {
 			estoque -= quantidade;
 			cliente.setDivida(cliente.getDivida() + (valor * quantidade)); 
 			return true;

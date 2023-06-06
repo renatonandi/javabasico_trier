@@ -183,5 +183,17 @@ class FarmaciaUtilTest {
         assertEquals(8, perfume.getEstoque());
         assertEquals(200, cliente.getDivida());
     }
+    
+    @Test
+    @DisplayName("Teste de venda de produto sem estoque")
+    void vendaProdutoSemEstoque() {
+        Produtos produto = new Produtos("Perfume", 10, 100);
+        fu.cadastraProduto(produto);
+        Cliente cliente = new Cliente("Cliente", 0);
+        produto.realizaVenda(cliente, produto, 15);
+        
+        assertEquals(10, produto.getEstoque());
+        assertEquals(0, cliente.getDivida());
+    }
 
 }

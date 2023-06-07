@@ -87,20 +87,46 @@ group by p.sigla
 order by quantidade_votos desc; 
 
 --21
-select v.voto + vi.brancos + vi.nulos from voto v 
+select (sum(v.voto) + vi.brancos + vi.nulos) from voto v 
 inner join candidato c on c.id = v.candidato 
 inner join cargo on cargo.id = c.cargo and cargo.nome = 'Prefeito'
 inner join cidade ci on ci.id = c.cidade and ci.nome = 'TUBARÃO'
-inner join voto_invalido vi on vi.cidade = ci.id and vi.cargo = cargo.id; 
+inner join voto_invalido vi on vi.cidade = ci.id and vi.cargo = cargo.id
+group by vi.brancos, vi.nulos ; 
 
 
 
 --22
-select ci.qt_eleitores - (vi.brancos + vi.nulos + v.voto)  from cidade ci
-inner join candidato c on c.cidade = ci.id 
-inner join voto v on v.candidato = c.id 
-inner join voto_invalido vi on vi.cidade = ci.id 
-where ci.nome = 'TUBARÃO';
+select ci.qt_eleitores - (SUM(v.voto + vi.brancos + vi.nulos)) from cidade ci
+inner join candidato c on ci.id = c.cidade
+inner join cargo ca on ca.id = c.cargo and ca.nome = 'Prefeito'
+inner join voto v on v.candidato = c.id
+inner join voto_invalido vi on vi.cidade = ci.id and vi.cargo = ca.id
+where ci.nome = 'TUBARÃO'
+group by ci.qt_eleitores;
+
 
 --23
-select
+select ci.nome, ci.qt_eleitores - (sum(v.voto) + vi.brancos + vi.nulos) as nao_votantes from cidade ci
+inner join candidato c on c.cidade = ci.id 
+inner join cargo ca on ca.id = c.cargo and ca.nome = 'Prefeito'
+inner join voto v on v.candidato = c.id 
+inner join voto_invalido vi on vi.cidade = ci.id and vi.cargo = ca.id 
+group by ci.nome, ci.qt_eleitores, vi.brancos, vi.nulos
+order by nao_votantes desc;
+
+--24
+select ci.nome, ((ci.qt_eleitores - (sum(v.voto) + vi.brancos + vi.nulos))/ci.qt_eleitores ) * 100 as porcentagem from cidade ci
+inner join candidato c on c.cidade = ci.id 
+inner join cargo ca on ca.id = c.cargo and ca.nome = 'Prefeito'
+inner join voto v on v.candidato = c.id 
+inner join voto_invalido vi on vi.cidade = ci.id and vi.cargo = ca.id 
+group by ci.nome, ci.qt_eleitores, vi.brancos, vi.nulos
+order by porcentagem desc;
+
+--25
+select distinct on (ci.nome) ci.nome, c.nome, v.voto from cidade ci
+inner join candidato c on c.cidade = ci.id 
+inner join voto v on v.candidato = c.id 
+inner join cargo ca on ca.id = c.cargo and ca.nome = 'Prefeito'
+order by ci.nome, v.voto desc;
